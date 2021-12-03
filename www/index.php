@@ -17,6 +17,8 @@ spl_autoload_register(function (string $className) {
 //    $controller->main();
 //}
 
+//echo $_SERVER['SCRIPT_NAME'] . '?' . $_SERVER['QUERY_STRING'];
+
 $route = $_GET['route'] ?? '';
 $routes = require __DIR__ . '/../src/routes.php';
 
