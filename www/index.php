@@ -44,25 +44,25 @@ $actionName = $controllerAndAction[1];
 $controller = new $controllerName;
 $controller->$actionName(...$matches);
 
-//$pattern = '~^hello/(.*)$~';
-//preg_match($pattern, $route, $matches);
-//
-//if (!empty($matches)) {
-//    $controller = new \MyProject\Controllers\MainController();
-//    $controller->sayHello($matches[1]);
-//    return;
-//}
-//
-//$pattern = '~^$~';
-//preg_match($pattern, $route, $matches);
-//
-//if (!empty($matches)) {
-//    $controller = new \MyProject\Controllers\MainController();
-//    $controller->main();
-//    return;
-//}
-//
-//echo 'Page not found';
+/**
+ * @param $a
+ * @param $b
+ * @return int
+ */
+function sum($a, $b)
+{
+    return $a + $b;
+}
+
+$sumReflector = new ReflectionFunction('sum');
+
+echo $sumReflector->getFileName();
+echo '<br>';
+echo $sumReflector->getStartLine();
+echo '<br>';
+echo $sumReflector->getEndLine();
+echo '<br>';
+echo $sumReflector->getDocComment();
 
 
 
