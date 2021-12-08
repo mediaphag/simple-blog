@@ -44,25 +44,6 @@ $actionName = $controllerAndAction[1];
 $controller = new $controllerName;
 $controller->$actionName(...$matches);
 
-/**
- * @param $a
- * @param $b
- * @return int
- */
-function sum($a, $b)
-{
-    return $a + $b;
-}
-
-$sumReflector = new ReflectionFunction('sum');
-
-echo $sumReflector->getFileName();
-echo '<br>';
-echo $sumReflector->getStartLine();
-echo '<br>';
-echo $sumReflector->getEndLine();
-echo '<br>';
-echo $sumReflector->getDocComment();
 
 
 

@@ -36,6 +36,30 @@ class Article extends ActiveRecordEntity
     }
 
     /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param string $text
+     */
+    public function setText(string $text): void
+    {
+        $this->text = $text;
+    }
+
+    /**
+     * @param int $authorId
+     */
+    public function setAuthorId(int $authorId): void
+    {
+        $this->authorId = $authorId;
+    }
+
+    /**
      * @return User
      */
     public function getAuthor(): User
@@ -47,4 +71,5 @@ class Article extends ActiveRecordEntity
     {
         return 'articles';
     }
+
 }
