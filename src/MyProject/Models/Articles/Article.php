@@ -52,11 +52,11 @@ class Article extends ActiveRecordEntity
     }
 
     /**
-     * @param int $authorId
+     * @param User $author
      */
-    public function setAuthorId(int $authorId): void
+    public function setAuthor(User $author): void
     {
-        $this->authorId = $authorId;
+        $this->authorId = $author->getId();
     }
 
     /**

@@ -19,6 +19,8 @@ class Db
             $dbOptions['password']
         );
         $this->pdo->exec('SET NAMES UTF8');
+        $this->pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+        $this->pdo->setAttribute(\PDO::ATTR_STRINGIFY_FETCHES, false);
     }
 
     public function query(string $sql,array  $params = [], string $className = 'stdClass'): ?array
@@ -40,5 +42,10 @@ class Db
         }
 
         return self::$instance;
+    }
+
+    public function getLastInsertId(): int
+    {
+        return (int) $this->pdo->lastInsertId();
     }
 }

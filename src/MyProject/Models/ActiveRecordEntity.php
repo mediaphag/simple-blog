@@ -85,7 +85,6 @@ abstract class ActiveRecordEntity
         $mappedPropertiesNotNull = array_filter($mappedProperties, function ($value) {
             return $value !== null;
         });
-        var_dump($mappedPropertiesNotNull);
 
         $columns2fields = [];
         $params2values = [];
@@ -105,9 +104,36 @@ abstract class ActiveRecordEntity
             . implode(', ', $params)
             . ')';
 
-        var_dump($sql);
         $db = Db::getInstance();
         $db->query($sql, $params2values, static::class);
+
+        $this->id = $db->getLastInsertId();
+        $this->refresh();
+
+//        $createdEntity = $this->getById($this->id);
+//        $reflectorCreatedEntity = new \ReflectionObject($createdEntity);
+//        $propertiesCreatedEntity = $reflectorCreatedEntity->getProperties();
+//        var_dump($propertiesCreatedEntity);
+//
+//        foreach ($propertiesCreatedEntity as $propertyCreatedEntity) {
+//            $tempProperty = $propertyCreatedEntity->getName();
+//            if ($this->$tempProperty == null) {
+//                $this->$tempProperty = $createdEntity->$tempProperty;
+//            }
+//        }
+
+    }
+
+    public function refresh(): void
+    {
+        $createdEntity = static::getById($this->id);
+        $propertiesCreatedEntity = get_object_vars($createdEntity);
+
+        foreach ($propertiesCreatedEntity as $key => $value) {
+            if ($this->$key == null) {
+                $this->$key = $value;
+            }
+        }
     }
 
     private function mapPropertiesToDbFormat(): array
