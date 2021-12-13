@@ -5,7 +5,9 @@ return [
     '~^articles/(\d+)/edit$~' => [\MyProject\Controllers\ArticlesController::class, 'edit'],
     '~^articles/add$~' => [\MyProject\Controllers\ArticlesController::class, 'add'],
     '~^articles/(\d+)/delete$~' => [\MyProject\Controllers\ArticlesController::class, 'delete'],
+    '~^users/register$~' => [\MyProject\Controllers\UsersController::class, 'signUp'],
+    '~^$~' => [\MyProject\Controllers\MainController::class, 'main'],
     '~^hello/(.*)$~' => [\MyProject\Controllers\MainController::class, 'sayHello'],
     '~^bye/(.*)$~' => [\MyProject\Controllers\MainController::class, 'sayBye'],
-    '~^$~' => [\MyProject\Controllers\MainController::class, 'main'],
+
 ];

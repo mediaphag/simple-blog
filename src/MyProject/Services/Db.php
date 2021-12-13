@@ -21,9 +21,10 @@ class Db
                 $dbOptions['user'],
                 $dbOptions['password']
             );
-            $this->pdo->exec('SET NAMES UTF8');
             $this->pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
             $this->pdo->setAttribute(\PDO::ATTR_STRINGIFY_FETCHES, false);
+            //$this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            $this->pdo->exec('SET NAMES UTF8');
         } catch (\PDOException $e) {
             throw new DbException('Ошибка при подключении к базе данных: ' . $e->getMessage());
         }
