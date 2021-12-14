@@ -36,6 +36,14 @@ class User extends ActiveRecordEntity
         return $this->nickname;
     }
 
+    /**
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
     protected static function getTableName(): string
     {
         return 'users';
@@ -85,5 +93,11 @@ class User extends ActiveRecordEntity
         $user->save();
 
         return $user;
+    }
+
+    public function activate(): void
+    {
+        $this->isConfirmed = (int)true;
+        $this->save();
     }
 }

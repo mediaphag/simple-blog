@@ -109,19 +109,6 @@ abstract class ActiveRecordEntity
 
         $this->id = $db->getLastInsertId();
         $this->refresh();
-
-//        $createdEntity = $this->getById($this->id);
-//        $reflectorCreatedEntity = new \ReflectionObject($createdEntity);
-//        $propertiesCreatedEntity = $reflectorCreatedEntity->getProperties();
-//        var_dump($propertiesCreatedEntity);
-//
-//        foreach ($propertiesCreatedEntity as $propertyCreatedEntity) {
-//            $tempProperty = $propertyCreatedEntity->getName();
-//            if ($this->$tempProperty == null) {
-//                $this->$tempProperty = $createdEntity->$tempProperty;
-//            }
-//        }
-
     }
 
     public function delete(): void
@@ -136,14 +123,23 @@ abstract class ActiveRecordEntity
 
     public function refresh(): void
     {
-        $createdEntity = static::getById($this->id);
-        $propertiesCreatedEntity = get_object_vars($createdEntity);
+        $objectFromDb = static::getById($this->id);
+        $reflector = new \ReflectionObject($objectFromDb);
+        $properties = $reflector->getProperties();
 
-        foreach ($propertiesCreatedEntity as $key => $value) {
-            if ($this->$key == null) {
-                $this->$key = $value;
-            }
+        foreach ($properties as $property) {
+            $property->setAccessible(true);
+            $propertyName = $property->getName();
+            $this->$propertyName = $property->getValue($objectFromDb);
         }
+//        $createdEntity = static::getById($this->id);
+//        $propertiesCreatedEntity = get_object_vars($createdEntity);
+//
+//        foreach ($propertiesCreatedEntity as $key => $value) {
+//            if ($this->$key == null) {
+//                $this->$key = $value;
+//            }
+//        }
     }
 
     public static function findOneByColumn(string $columnName, $value): ?self
