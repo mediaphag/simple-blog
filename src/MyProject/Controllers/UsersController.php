@@ -3,6 +3,7 @@
 namespace MyProject\Controllers;
 
 use MyProject\Exceptions\InvalidArgumentException;
+use MyProject\Exceptions\NotFoundException;
 use MyProject\Services\EmailSender;
 use MyProject\View\View;
 use MyProject\Models\Users\User;
@@ -49,10 +50,26 @@ class UsersController
     public function activate(int $userId, string $activationCode)
     {
         $user = User::getById($userId);
+        if ($user === null) {
+            throw new NotFoundException('User not found');
+        }
+        if ($user->getIsConfirmed()) {
+            $this->view->renderHtml('users/activationsuccessful.php',
+            [
+                'isAlreadyActivated' => true
+            ]);
+            return;
+        }
         $isCodeValid = UserActivationService::checkActivationCode($user, $activationCode);
         if ($isCodeValid) {
             $user->activate();
-            echo 'Ok!';
+            UserActivationService::deleteUsedCode($user);
+            $this->view->renderHtml('users/activationsuccessful.php',
+                [
+                    'isAlreadyActivated' => false
+                ]);
+            return;
         }
+        throw new NotFoundException('Activation code is not valid');
     }
 }

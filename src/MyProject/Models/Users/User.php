@@ -44,6 +44,14 @@ class User extends ActiveRecordEntity
         return $this->email;
     }
 
+    /**
+     * @return int
+     */
+    public function getIsConfirmed(): int
+    {
+        return $this->isConfirmed;
+    }
+
     protected static function getTableName(): string
     {
         return 'users';
