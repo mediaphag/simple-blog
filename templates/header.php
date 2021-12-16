@@ -17,4 +17,9 @@
         </td>
     </tr>
     <tr>
+        <td colspan="2" style="text-align: right">
+            <?= !empty($user) ? 'Привет, ' . $user->getNickname() : 'Войдите на сайт' ?>
+        </td>
+    </tr>
+    <tr>
         <td>
