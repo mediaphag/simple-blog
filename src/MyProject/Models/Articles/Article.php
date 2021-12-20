@@ -2,6 +2,7 @@
 
 namespace MyProject\Models\Articles;
 
+use MyProject\Exceptions\InvalidArgumentException;
 use MyProject\Models\ActiveRecordEntity;
 use MyProject\Models\Users\User;
 
@@ -72,4 +73,24 @@ class Article extends ActiveRecordEntity
         return 'articles';
     }
 
+    public static function createFromArray(array $fields, User $author): Article
+    {
+        if (empty($fields['name'])) {
+            throw new InvalidArgumentException('Article title not submitted');
+        }
+
+        if (empty($fields['text'])) {
+            throw new InvalidArgumentException('The text of the article has not been submitted');
+        }
+
+        $article = new Article();
+
+        $article->setAuthor($author);
+        $article->setName($fields['name']);
+        $article->setText($fields['text']);
+
+        $article->save();
+
+        return $article;
+    }
 }
