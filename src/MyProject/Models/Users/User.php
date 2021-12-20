@@ -55,6 +55,14 @@ class User extends ActiveRecordEntity
     /**
      * @return string
      */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * @return string
+     */
     public function getAuthToken(): string
     {
         return $this->authToken;
@@ -155,6 +163,5 @@ class User extends ActiveRecordEntity
     {
         $this->authToken = sha1(random_bytes(100) . random_bytes(100));
     }
-
 
 }

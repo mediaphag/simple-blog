@@ -2,6 +2,7 @@
 
 namespace MyProject\Controllers;
 
+use MyProject\Exceptions\ForbiddenException;
 use MyProject\Exceptions\InvalidArgumentException;
 use MyProject\Exceptions\NotFoundException;
 use MyProject\Exceptions\UnauthorizedException;
@@ -42,6 +43,10 @@ class ArticlesController extends AbstractController
     {
         if ($this->user === null) {
             throw new UnauthorizedException();
+        }
+
+        if (!$this->user->isAdmin()) {
+            throw new ForbiddenException('To add an article, you need to have administrator rights');
         }
 
         if (!empty($_POST)) {
