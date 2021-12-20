@@ -10,6 +10,14 @@ class UsersAuthService
         setcookie('token', $token, 0, '/', '', false, true);
     }
 
+    public static function deleteToken(): void
+    {
+        $token = $_COOKIE['token'] ?? null;
+        if ($token !== null) {
+            setcookie('token', $token, time() - 3600, '/', '', false, true);
+        }
+    }
+
     public static function getUserByToken(): ?User
     {
         $token = $_COOKIE['token'] ?? '';

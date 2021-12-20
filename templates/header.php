@@ -18,7 +18,12 @@
     </tr>
     <tr>
         <td colspan="2" style="text-align: right">
-            <?= !empty($user) ? 'Привет, ' . $user->getNickname() : 'Войдите на сайт' ?>
+            <?php if (!empty($user)): ?>
+                Привет, <?= $user->getNickname() ?> | <a href="/users/logout">Выйти</a>
+            <?php else: ?>
+            <a href="/users/login">Войти</a> | <a href="/users/register">Зарегистрироаться</a>
+            <?php endif ?>
+<!--    <?//= !empty($user) ? 'Привет, ' . $user->getNickname() : 'Войдите на сайт' ?>    -->
         </td>
     </tr>
     <tr>
