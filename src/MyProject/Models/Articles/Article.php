@@ -93,4 +93,22 @@ class Article extends ActiveRecordEntity
 
         return $article;
     }
+
+    public function updateFromArray(array $fields): Article
+    {
+        if (empty($fields['name'])) {
+            throw new InvalidArgumentException('Article title not submitted');
+        }
+
+        if (empty($fields['text'])) {
+            throw new InvalidArgumentException('The text of the article has not been submitted');
+        }
+
+        $this->setName($fields['name']);
+        $this->setText($fields['text']);
+
+        $this->save();
+
+        return $this;
+    }
 }
