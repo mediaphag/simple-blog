@@ -10,6 +10,7 @@ return [
     '~^users/logout$~' => [\MyProject\Controllers\UsersController::class, 'logout'],
     '~^users/(\d+)/activate/(.+)$~' => [\MyProject\Controllers\UsersController::class, 'activate'],
     '~^$~' => [\MyProject\Controllers\MainController::class, 'main'],
+    '~^articles/(\d+)/comments$~' => [\MyProject\Controllers\CommentsController::class, 'add'],
     '~^hello/(.*)$~' => [\MyProject\Controllers\MainController::class, 'sayHello'],
     '~^bye/(.*)$~' => [\MyProject\Controllers\MainController::class, 'sayBye'],
 

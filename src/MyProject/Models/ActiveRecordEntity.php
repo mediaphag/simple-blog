@@ -156,6 +156,18 @@ abstract class ActiveRecordEntity
         return $result[0];
     }
 
+    public static function findByColumn(string $columnName, $value): array
+    {
+        $db = Db::getInstance();
+        $result = $db->query(
+            'SELECT * FROM `' . static::getTableName() . '` WHERE `' . $columnName . '` = :value ;',
+            [':value' => $value],
+            static::class
+        );
+
+        return $result;
+    }
+
     private function mapPropertiesToDbFormat(): array
     {
         $reflector = new \ReflectionObject($this);
