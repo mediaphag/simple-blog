@@ -25,8 +25,6 @@ class Comment extends ActiveRecordEntity
      */
     protected $text;
 
-
-
     protected static function getTableName(): string
     {
         return 'comments';
@@ -109,7 +107,17 @@ class Comment extends ActiveRecordEntity
         return $comment;
     }
 
+    public function updateFromArray(array $fields, User $author, int $commentId): Comment
+    {
 
+        if (empty($fields['text'])) {
+            throw new InvalidArgumentException('The text of the comment has not been submitted');
+        }
 
+        $this->setText($fields['text']);
 
+        $this->save();
+
+        return $this;
+    }
 }

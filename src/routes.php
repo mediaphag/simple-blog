@@ -11,6 +11,7 @@ return [
     '~^users/(\d+)/activate/(.+)$~' => [\MyProject\Controllers\UsersController::class, 'activate'],
     '~^$~' => [\MyProject\Controllers\MainController::class, 'main'],
     '~^articles/(\d+)/comments$~' => [\MyProject\Controllers\CommentsController::class, 'add'],
+    '~^comments/(\d+)/edit$~' => [\MyProject\Controllers\CommentsController::class, 'edit'],
     '~^hello/(.*)$~' => [\MyProject\Controllers\MainController::class, 'sayHello'],
     '~^bye/(.*)$~' => [\MyProject\Controllers\MainController::class, 'sayBye'],
 
