@@ -37,6 +37,14 @@ class Article extends ActiveRecordEntity
     }
 
     /**
+     * @return string
+     */
+    public function getShortText(): string
+    {
+        return substr($this->text, 0, 100);
+    }
+
+    /**
      * @param string $name
      */
     public function setName(string $name): void

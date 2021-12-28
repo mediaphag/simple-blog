@@ -19,11 +19,14 @@
     <tr>
         <td colspan="2" style="text-align: right">
             <?php if ($user !== null): ?>
-                Привет, <?= $user->getNickname() ?> | <a href="/users/logout">Выйти</a>
+                Привет, <?= $user->getNickname() ?> |
+                    <?php if ($user->isAdmin()): ?>
+                        <a href="/admin/dashboard">Enter to admin panel</a>
+                    <?php endif ?> |
+                <a href="/users/logout">Выйти</a>
             <?php else: ?>
             <a href="/users/login">Войти</a> | <a href="/users/register">Зарегистрироаться</a>
             <?php endif ?>
-<!--    <?//= !empty($user) ? 'Привет, ' . $user->getNickname() : 'Войдите на сайт' ?>    -->
         </td>
     </tr>
     <tr>

@@ -12,4 +12,7 @@
             <input type="submit" value="Войти">
         </form>
     </div>
+    <div class="center">
+        <a href="users/passwordrecover" a>Забыли пароль?</a>
+    </div>
 <?php include __DIR__ . '/../footer.php'; ?>
