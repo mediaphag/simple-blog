@@ -21,8 +21,8 @@
             <?php if ($user !== null): ?>
                 Привет, <?= $user->getNickname() ?> |
                     <?php if ($user->isAdmin()): ?>
-                        <a href="/admin/dashboard">Enter to admin panel</a>
-                    <?php endif ?> |
+                        <a href="/admin/dashboard">Enter to admin panel</a> |
+                    <?php endif ?>
                 <a href="/users/logout">Выйти</a>
             <?php else: ?>
             <a href="/users/login">Войти</a> | <a href="/users/register">Зарегистрироаться</a>

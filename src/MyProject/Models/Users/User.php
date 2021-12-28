@@ -154,6 +154,24 @@ class User extends ActiveRecordEntity
         return $user;
     }
 
+    public function setNewPassword(array $userData,int $userId): User
+    {
+        if (empty($userData['password']) || empty($userData['secondPassword'])) {
+            throw new InvalidArgumentException('Не заполнены поля ввода нового пароля');
+        }
+
+        if ($userData['password'] !== $userData['secondPassword']) {
+            throw new InvalidArgumentException('Введеные значения не совпадают');
+        }
+
+        $user = User::getById($userId);
+        $user->passwordHash = password_hash($userData['password'], PASSWORD_DEFAULT);
+        $user->save();
+
+        return $user;
+
+    }
+
     public function getPasswordHash(): string
     {
         return $this->passwordHash;

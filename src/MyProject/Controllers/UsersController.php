@@ -4,6 +4,7 @@ namespace MyProject\Controllers;
 
 use MyProject\Exceptions\InvalidArgumentException;
 use MyProject\Exceptions\NotFoundException;
+use MyProject\Models\Users\UserPwResetService;
 use MyProject\Models\Users\UsersAuthService;
 use MyProject\Services\EmailSender;
 use MyProject\Models\Users\User;
@@ -86,5 +87,66 @@ class UsersController extends AbstractController
     {
         UsersAuthService::deleteToken();
         $this->view->renderHtml('users/logout.php', ['user' => null]);
+    }
+
+    public function passwordRecover(): void
+    {
+        if (!empty($_POST)) {
+            try {
+                $user = User::findOneByColumn('email', $_POST['email']);
+            } catch (InvalidArgumentException $e) {
+                $this->view->renderHtml('users/passwordrecover.php', ['error' => $e->getMessage()]);
+                return;
+            }
+
+            if ($user === null) {
+                throw new NotFoundException('User with this email not found');
+                return;
+            }
+
+            if ($user instanceof User) {
+                $code = UserPwResetService::createPwResetCode($user);
+
+                EmailSender::send($user, 'Сброс пароля', 'userPwReset.php',
+                    [
+                        'userId' => $user->getId(),
+                        'code' => $code
+                    ]
+                );
+            }
+
+            $this->view->renderHtml('users/pwresetsuccessfully.php');
+            return;
+
+        }
+
+        $this->view->renderHtml('users/passwordrecover.php');
+    }
+
+    public function newPassword(int $userId, string $pwResetCode)
+    {
+        $user = User::getById($userId);
+        if ($user === null) {
+            throw new NotFoundException('User not found');
+        }
+
+        $isCodeValid = UserPwResetService::checkPwResetCode($user, $pwResetCode);
+        if ($isCodeValid) {
+            if (!empty($_POST)) {
+                try {
+                    $user->setNewPassword($_POST, $userId);
+                    UserPwResetService::deleteUsedCode($user);
+                    $this->view->renderHtml('users/newpasswordsuccessful.php');
+                } catch (InvalidArgumentException $e) {
+                    $this->view->renderHtml('errors/404.php', ['error' => $e->getMessage()]);
+                }
+                return;
+            }
+
+            $this->view->renderHtml('users/newpassword.php', ['userId' => $userId, 'code' => $pwResetCode]);
+            return;
+        }
+
+        throw new NotFoundException('Reset code is not valid');
     }
 }
