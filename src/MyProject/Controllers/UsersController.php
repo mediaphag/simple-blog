@@ -26,7 +26,7 @@ class UsersController extends AbstractController
             if ($user instanceof User) {
                 $code = UserActivationService::createActivationCode($user);
 
-                EmailSender::send($user, 'Активация', 'userActivation.php',
+                EmailSender::send($user, 'Activation', 'userActivation.php',
                 [
                     'userId' => $user->getId(),
                     'code' => $code
@@ -48,7 +48,7 @@ class UsersController extends AbstractController
             throw new NotFoundException('User not found');
         }
         if ($user->getIsConfirmed()) {
-            $this->view->renderHtml('users/activationsuccessful.php',
+            $this->view->renderHtml('users/activationSuccessful.php',
             [
                 'isAlreadyActivated' => true
             ]);
@@ -58,7 +58,7 @@ class UsersController extends AbstractController
         if ($isCodeValid) {
             $user->activate();
             UserActivationService::deleteUsedCode($user);
-            $this->view->renderHtml('users/activationsuccessful.php',
+            $this->view->renderHtml('users/activationSuccessful.php',
                 [
                     'isAlreadyActivated' => false
                 ]);
@@ -95,7 +95,7 @@ class UsersController extends AbstractController
             try {
                 $user = User::findOneByColumn('email', $_POST['email']);
             } catch (InvalidArgumentException $e) {
-                $this->view->renderHtml('users/passwordrecover.php', ['error' => $e->getMessage()]);
+                $this->view->renderHtml('users/passwordRecover.php', ['error' => $e->getMessage()]);
                 return;
             }
 
@@ -107,7 +107,7 @@ class UsersController extends AbstractController
             if ($user instanceof User) {
                 $code = UserPwResetService::createPwResetCode($user);
 
-                EmailSender::send($user, 'Сброс пароля', 'userPwReset.php',
+                EmailSender::send($user, 'Password reset', 'userPwReset.php',
                     [
                         'userId' => $user->getId(),
                         'code' => $code
@@ -115,12 +115,12 @@ class UsersController extends AbstractController
                 );
             }
 
-            $this->view->renderHtml('users/pwresetsuccessfully.php');
+            $this->view->renderHtml('users/pwResetSuccessfully.php');
             return;
 
         }
 
-        $this->view->renderHtml('users/passwordrecover.php');
+        $this->view->renderHtml('users/passwordRecover.php');
     }
 
     public function newPassword(int $userId, string $pwResetCode)
@@ -136,14 +136,14 @@ class UsersController extends AbstractController
                 try {
                     $user->setNewPassword($_POST, $userId);
                     UserPwResetService::deleteUsedCode($user);
-                    $this->view->renderHtml('users/newpasswordsuccessful.php');
+                    $this->view->renderHtml('users/newPasswordSuccessful.php');
                 } catch (InvalidArgumentException $e) {
                     $this->view->renderHtml('errors/404.php', ['error' => $e->getMessage()]);
                 }
                 return;
             }
 
-            $this->view->renderHtml('users/newpassword.php', ['userId' => $userId, 'code' => $pwResetCode]);
+            $this->view->renderHtml('users/newPassword.php', ['userId' => $userId, 'code' => $pwResetCode]);
             return;
         }
 

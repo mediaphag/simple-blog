@@ -11,14 +11,4 @@ class MainController extends AbstractController
         $articles = Article::findAll();
         $this->view->renderHtml('main/main.php', ['articles' => $articles]);
     }
-
-    public function sayHello(string $name)
-    {
-        $this->view->renderHtml('main/hello.php', ['name' => $name, 'pageTitle' => 'Страница приветствия']);
-    }
-
-    public function sayBye(string $name)
-    {
-        echo 'Bye, ' . $name;
-    }
 }

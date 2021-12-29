@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>
-        <?= $pageTitle ?? 'Мой блог !!!' ?>
+        <?= $pageTitle ?? 'Corporate blog' ?>
 
     </title>
     <link rel="stylesheet" href="/styles.css">
@@ -13,19 +13,19 @@
 <table class="layout">
     <tr>
         <td colspan="2" class="header">
-            <?= $pageTitle ?? 'Мой блог !!!' ?>
+            <?= $pageTitle ?? 'Corporate blog' ?>
         </td>
     </tr>
     <tr>
         <td colspan="2" style="text-align: right">
             <?php if ($user !== null): ?>
-                Привет, <?= $user->getNickname() ?> |
+                Hello, <?= $user->getNickname() ?> |
                     <?php if ($user->isAdmin()): ?>
                         <a href="/admin/dashboard">Enter to admin panel</a> |
                     <?php endif ?>
-                <a href="/users/logout">Выйти</a>
+                <a href="/users/logout">Log out</a>
             <?php else: ?>
-            <a href="/users/login">Войти</a> | <a href="/users/register">Зарегистрироаться</a>
+            <a href="/users/login">Log in</a> | <a href="/users/register">Register now</a>
             <?php endif ?>
         </td>
     </tr>

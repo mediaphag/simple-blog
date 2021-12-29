@@ -1,3 +1,3 @@
-Вы успешно сбросили пароль<br>
-Для установки нового пароля перейдите <a href="http://blog.ll/users/<?=$userId?>/newpassword/<?=$code?>">по ссылке</a>.
+You have successfully reset your password<br>
+To set a new password, follow <a href="http://blog.ll/users/<?=$userId?>/new-password/<?=$code?>">the link</a>.
 

@@ -76,35 +76,35 @@ class User extends ActiveRecordEntity
     public static function signUp(array $userData): User
     {
         if (empty($userData['nickname'])) {
-            throw new InvalidArgumentException('Не передан nickname');
+            throw new InvalidArgumentException('Nickname field is not filled');
         }
 
         if (!preg_match('/^[a-zA-Z0-9]+$/', $userData['nickname'])) {
-            throw new InvalidArgumentException('Nickname может состоять только из символов латинского алфавита и цифр');
+            throw new InvalidArgumentException('Nickname can only consist of Latin characters and numbers');
         }
 
         if (empty($userData['email'])) {
-            throw new InvalidArgumentException('Не передан email');
+            throw new InvalidArgumentException('Email field is not filled');
         }
 
         if (!filter_var($userData['email'], FILTER_VALIDATE_EMAIL)) {
-            throw new InvalidArgumentException('Email некорректен');
+            throw new InvalidArgumentException('Email is incorrect');
         }
 
         if (empty($userData['password'])) {
-            throw new InvalidArgumentException('Не передан password');
+            throw new InvalidArgumentException('Password field is not filled');
         }
 
         if (mb_strlen($userData['password']) < 8) {
-            throw new InvalidArgumentException('Пароль должен быть не менее 8 символов');
+            throw new InvalidArgumentException('Password must be at least 8 characters');
         }
 
         if (static::findOneByColumn('nickname', $userData['nickname']) !== null) {
-            throw new InvalidArgumentException('Пользователь с таким nickname уже существует');
+            throw new InvalidArgumentException('User with this nickname already exists');
         }
 
         if (static::findOneByColumn('email', $userData['email']) !== null) {
-            throw new InvalidArgumentException('Пользователь с таким email уже существует');
+            throw new InvalidArgumentException('User with this email already exists');
         }
 
         $user = new User();
@@ -128,24 +128,24 @@ class User extends ActiveRecordEntity
     public static function login(array $loginData): User
     {
         if (empty($loginData['email'])) {
-            throw new InvalidArgumentException('Не передан email');
+            throw new InvalidArgumentException('Email field is not filled');
         }
 
         if (empty($loginData['password'])) {
-            throw new InvalidArgumentException('Не передан password');
+            throw new InvalidArgumentException('Password field is not filled');
         }
 
         $user = User::findOneByColumn('email', $loginData['email']);
         if ($user === null) {
-            throw new InvalidArgumentException('Нет пользователя с таким email');
+            throw new InvalidArgumentException('No user with this email');
         }
 
         if (!password_verify($loginData['password'], $user->getPasswordHash())) {
-            throw new InvalidArgumentException('Неправильный пароль');
+            throw new InvalidArgumentException('Invalid password');
         }
 
         if (!$user->isConfirmed) {
-            throw new InvalidArgumentException('Пользователь не подтвержден');
+            throw new InvalidArgumentException('User not verified');
         }
 
         $user->refreshAuthToken();
@@ -157,11 +157,11 @@ class User extends ActiveRecordEntity
     public function setNewPassword(array $userData,int $userId): User
     {
         if (empty($userData['password']) || empty($userData['secondPassword'])) {
-            throw new InvalidArgumentException('Не заполнены поля ввода нового пароля');
+            throw new InvalidArgumentException('Fields for entering a new password are not filled');
         }
 
         if ($userData['password'] !== $userData['secondPassword']) {
-            throw new InvalidArgumentException('Введеные значения не совпадают');
+            throw new InvalidArgumentException('The entered values do not match');
         }
 
         $user = User::getById($userId);

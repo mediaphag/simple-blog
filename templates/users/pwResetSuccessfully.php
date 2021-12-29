@@ -3,8 +3,8 @@
     <?php if (!empty($error)): ?>
         <div style="background-color: red;padding: 5px;margin: 15px"><?= $error ?></div>
     <?php endif; ?>
-    <h1>Пароль сброшен успешно</h1>
+    <h1>Password reset successfully</h1>
     <div class="center">
-        Для установки новго пароля перейдите по ссылке из письма<br>
+        To set a new password, follow the link from the letter<br>
     </div>
 <?php include __DIR__ . '/../footer.php'; ?>

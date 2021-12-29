@@ -1,2 +1,2 @@
-<h1>Хьюстон, у нас проблема!</h1>
+<h1>Houston, we have a problem</h1>
 <?= $error ?>

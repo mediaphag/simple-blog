@@ -26,7 +26,7 @@ class Db
             $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             $this->pdo->exec('SET NAMES UTF8');
         } catch (\PDOException $e) {
-            throw new DbException('Ошибка при подключении к базе данных: ' . $e->getMessage());
+            throw new DbException('Error while connecting to database: ' . $e->getMessage());
         }
 
 

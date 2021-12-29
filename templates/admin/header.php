@@ -20,7 +20,7 @@
     <tr>
         <td colspan="2" style="text-align: right">
             <?php if ($user !== null): ?>
-                Привет, <?= $user->getNickname() ?> | <a href="/users/logout">Выйти</a>
+                Hello, <?= $user->getNickname() ?> | <a href="/users/logout">Log out</a>
             <?php endif ?>
         </td>
     </tr>
