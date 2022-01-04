@@ -1,0 +1,19 @@
+{
+    "name": "mediaphag/myproject",
+    "type": "project",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Andrew Golovko",
+            "email": "andrew.golovko@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "MyProject\\": "src/MyProject"
+        }
+    },
+    "require": {
+        "erusev/parsedown": "^1.7"
+    }
+}

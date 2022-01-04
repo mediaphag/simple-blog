@@ -2,16 +2,18 @@
 
 use MyProject\Cli\AbstractCommand;
 
+require __DIR__ . '/../vendor/autoload.php';
+
 try {
     unset($argv[0]);
 
     // Register the autoload function
-    spl_autoload_register(function (string $className) {
-        $fileName = __DIR__ . '/../src/' . str_replace('\\', '/', $className) . '.php';
-        if (file_exists($fileName)) {
-            require_once $fileName;
-        }
-    });
+//    spl_autoload_register(function (string $className) {
+//        $fileName = __DIR__ . '/../src/' . str_replace('\\', '/', $className) . '.php';
+//        if (file_exists($fileName)) {
+//            require_once $fileName;
+//        }
+//    });
 
     // Make the full name of a class, having added namespace
     $className = '\\MyProject\\Cli\\' . array_shift($argv);
@@ -19,8 +21,8 @@ try {
         throw new \MyProject\Exceptions\CliException('Class "' . $className . '" not found');
     }
 
-    if (get_parent_class($className) !== AbstractCommand::class) {
-        throw new \MyProject\Exceptions\CliException('Class "' . $className . '" must extends AbstractCommand');
+    if (!is_subclass_of($className ,AbstractCommand::class)) {
+        throw new \MyProject\Exceptions\CliException('Class "' . $className . '" must extends MyProject\Cli\AbstractCommand');
     }
 
     // Preparing a list of arguments
