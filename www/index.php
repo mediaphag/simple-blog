@@ -5,6 +5,8 @@ use MyProject\Models\Users\UsersAuthService;
 require __DIR__ . '/../vendor/autoload.php';
 require_once 'debug.php';
 
+
+
 try {
 //    spl_autoload_register(function (string $className) {
 //        require_once __DIR__ . '/../src/' . str_replace('\\', '/', $className) . '.php';
