@@ -192,4 +192,26 @@ abstract class ActiveRecordEntity implements \JsonSerializable
     {
         return $this->mapPropertiesToDbFormat();
     }
+
+    public static function getPagesCount(int $itemPerPage): int
+    {
+        $db = Db::getInstance();
+        $result = $db->query('SELECT COUNT(*) AS cnt FROM ' . static::getTableName() . ';');
+        return ceil($result[0]->cnt / $itemPerPage);
+    }
+
+    public static function getPage(int $pageNum, int $itemsPerPage): array
+    {
+        $db = Db::getInstance();
+        return $db->query(
+            sprintf(
+                'SELECT * FROM `%s` ORDER BY id DESC LIMIT %d OFFSET %d;',
+                static::getTableName(),
+                $itemsPerPage,
+                ($pageNum - 1) * $itemsPerPage
+            ),
+            [],
+            static::class
+        );
+    }
 }

@@ -12,6 +12,7 @@ return [
     '~^users/password-recover$~' => [\MyProject\Controllers\UsersController::class, 'passwordRecover'],
     '~^users/(\d+)/new-password/(.+)$~' => [\MyProject\Controllers\UsersController::class, 'newPassword'],
     '~^$~' => [\MyProject\Controllers\MainController::class, 'main'],
+    '~^(\d+)$~' => [\MyProject\Controllers\MainController::class, 'page'],
     '~^articles/(\d+)/comments$~' => [\MyProject\Controllers\CommentsController::class, 'add'],
     '~^comments/(\d+)/edit$~' => [\MyProject\Controllers\CommentsController::class, 'edit'],
     '~^admin/dashboard$~' => [\MyProject\Controllers\AdminController::class, 'dashbord'],
