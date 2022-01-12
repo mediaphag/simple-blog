@@ -2,6 +2,6 @@
 /vendor/
 /logs/
 /www/lesson-profi.php
-#/src/MyProject/Cli/Subtractor.php
-#/src/MyProject/Cli/Summator.php
-#/src/MyProject/Cli/TestCron.php
+/src/MyProject/Cli/Subtractor.php
+/src/MyProject/Cli/Summator.php
+/src/MyProject/Cli/TestCron.php
